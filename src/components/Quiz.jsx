@@ -19,9 +19,6 @@ export default function Quiz() {
 
   const handleSelectedAnswer = useCallback(
     function handleSelectedAnswer(answer) {
-      if (answerState) {
-        return;
-      }
       setAnswerState('answered!');
 
       setUserAnswers((prev) => {
@@ -47,7 +44,7 @@ export default function Quiz() {
 
   const skipQuestion = useCallback(() => {
     setUserAnswers((prev) => {
-      return [...prev, 'null'];
+      return [...prev, null];
     });
     shuffledAnswers.current = null;
     if (answerState === '') {
@@ -56,7 +53,7 @@ export default function Quiz() {
   }, [answerState]);
 
   if (isQuizEnded) {
-    return <QuizEnd />;
+    return <QuizEnd userAnswers={userAnswers} />;
   }
 
   if (!shuffledAnswers.current) {
@@ -88,6 +85,7 @@ export default function Quiz() {
           return (
             <li key={index}>
               <button
+                disabled={answerState}
                 className={`bg-[#6cb7f5] hover:bg-[#9d5af5] transition-colors duration-300 py-1.5 px-4 w-full text-right rounded-2xl ${cssClass} `}
                 onClick={() => handleSelectedAnswer(answer)}
               >
@@ -98,6 +96,7 @@ export default function Quiz() {
         })}
       </ul>
       <QuestionTimer
+        style={answerState ? true : false}
         key={timerKey}
         timeout={timeout}
         handleTimeout={skipQuestion}

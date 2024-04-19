@@ -3,7 +3,7 @@ import Quiz from './components/Quiz';
 
 function App() {
   return (
-    <main className='font-MorabbaBold w-full h-screen'>
+    <main className='font-MorabbaBold w-full min-h-screen flex justify-center items-center'>
       <Header />
       <Quiz />
     </main>
